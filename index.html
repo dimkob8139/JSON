@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form action="#" name="myForm">
+
+    <input type="text" name="token" placeholder="Please enter your token">
+        <select name="action">
+
+        <option value="getCars">Список автомобилей</option>
+        <option value="getCountries">Список стран</option>
+        <option value="getPlayers">Список игроков</option>
+        <option value="getDrags">Список наркотитков</option>
+
+    </select>
+    <input type="submit" name="send" value="Отправить">
+</form>
+<script>
+    document.myForm.send.addEventListener('click',()=>{
+        let token = document.myForm.token.value;
+        let action = document.myForm.action.value;
+// XMLHTTPRequest - строенный объект реализации технологии AJAX
+
+        // cоздание объекта
+        //1
+        let xhr = new  XMLHttpRequest();
+
+        // Конфигурация запроса
+        //2
+
+        xhr.open('GET',`client_api.php?token=${token}&action=${action}`,true);
+
+        //Отправка запроса
+        //3
+        xhr.send();
+
+
+        //событие смены состояния запроса
+        xhr.onreadystatechange = ()=>{
+          if(xhr.readyState!==4)
+          {
+              return;
+          }
+          if(xhr.status!==200)
+          {
+              console.log(`${xhr.status}: ${xhr.statusText}`);
+          }
+          else {
+              alert(xhr.responseText);
+          }
+        };
+
+    });
+
+
+</script>
+</body>
+</html>
